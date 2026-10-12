@@ -4,15 +4,17 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Check, Heart, PartyPopper } from 'lucide-react'
 import { useState } from 'react'
 import { Reveal, SectionHeading } from '@/components/reveal'
-import { IS_RECEPTION } from '@/lib/wedding'
 
 type Attendance = 'yes' | 'no'
-type FunctionAttending = 'Wedding at Ujjain' | 'Reception at Ramtek' | 'Both'
+type FunctionAttending = 'Wedding at Visakhapatnam' | 'Reception at Nagpur' | 'Both'
 
-const FUNCTIONS: FunctionAttending[] = ['Wedding at Ujjain', 'Reception at Ramtek', 'Both']
+// These must match the Google Form's option text exactly.
+const FUNCTIONS: FunctionAttending[] = ['Wedding at Visakhapatnam', 'Reception at Nagpur', 'Both']
 
 const GOOGLE_FORM_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLSdfVvKCzXl9Egz7eEpsm55NHE1SjAIl30xao2w9sU4x2AFLkg/formResponse'
+  'https://docs.google.com/forms/d/e/1FAIpQLSeXQmLhpsLJUvHX28FUx3VSMawQ8dX0BU3uHFE5ZvCE2hC5ng/formResponse'
+
+const RSVP_DEADLINE = 'October 25, 2026'
 
 const inputClass =
   'w-full rounded-xl border border-cream/15 bg-cream/5 px-4 py-3 text-sm text-cream placeholder:text-cream/35 outline-none transition-colors focus:border-champagne/60 focus:bg-cream/10'
@@ -52,7 +54,7 @@ export function Rsvp() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [attendance, setAttendance] = useState<Attendance>('yes')
-  const [functionAttending, setFunctionAttending] = useState<FunctionAttending>('Wedding at Ujjain')
+  const [functionAttending, setFunctionAttending] = useState<FunctionAttending>('Wedding at Visakhapatnam')
   const [guests, setGuests] = useState(1)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -64,31 +66,19 @@ export function Rsvp() {
 
     try {
       const guestName = String(formData.get('name'))
+      // Field IDs match the "Collect details of attendees" Google Form.
       const googleFormData = new URLSearchParams({
-        'entry.877086558': IS_RECEPTION ? `Reception — ${guestName}` : guestName,
-        'entry.1498135098': String(formData.get('email')),
-        'entry.1424661284':
+        'entry.903994205': guestName,
+        'entry.459862508': String(formData.get('contact')),
+        'entry.1218540402':
           attendance === 'yes' ? "Hell Yes, I'm in" : 'Regretfully Declining',
         fvv: '1',
         pageHistory: '0',
       })
 
       if (attendance === 'yes') {
-        if (!IS_RECEPTION) {
-          googleFormData.set('entry.1390639832', functionAttending)
-        }
-        const arrivalDate = IS_RECEPTION ? '2026-12-04' : String(formData.get('arrivalDate'))
-        const dateParts = arrivalDate.match(/^(\d{4})-(\d{2})-(\d{2})$/)
-
-        if (!dateParts) {
-          throw new Error('Invalid arrival date')
-        }
-
-        const [, year, month, day] = dateParts
-        googleFormData.set('entry.2606285', guests === 2 ? 'Me + one' : 'Just me')
-        googleFormData.set('entry.1491155061_year', year)
-        googleFormData.set('entry.1491155061_month', String(Number(month)))
-        googleFormData.set('entry.1491155061_day', String(Number(day)))
+        googleFormData.set('entry.798810526', guests === 2 ? 'Me + one' : 'Just me')
+        googleFormData.set('entry.1475832411', functionAttending)
       }
 
       await fetch(GOOGLE_FORM_URL, {
@@ -119,7 +109,7 @@ export function Rsvp() {
           className="text-center [&_div]:mx-auto"
         />
         <Reveal delay={0.1} className="mt-4 text-center">
-          <p className="text-sm text-cream/60">Kindly respond by October 15, 2026.</p>
+          <p className="text-sm text-cream/60">Kindly respond by {RSVP_DEADLINE}.</p>
         </Reveal>
 
         <Reveal delay={0.15}>
@@ -154,9 +144,7 @@ export function Rsvp() {
                   </h3>
                   <p className="mt-3 max-w-sm text-sm leading-relaxed text-cream/60">
                     {attendance === 'yes'
-                      ? IS_RECEPTION
-                        ? 'See you in Ramtek. We cannot wait to celebrate with you.'
-                        : 'See you in Ujjain. We cannot wait to celebrate with you.'
+                      ? 'See you there. We cannot wait to celebrate with you.'
                       : 'Thank you for letting us know — we will raise a glass to you from afar.'}
                   </p>
                   <button
@@ -190,15 +178,15 @@ export function Rsvp() {
                   </div>
 
                   <div>
-                    <label htmlFor="email" className={labelClass}>
-                      Email
+                    <label htmlFor="contact" className={labelClass}>
+                      Contact number
                     </label>
                     <input
-                      id="email"
-                      name="email"
-                      type="email"
+                      id="contact"
+                      name="contact"
+                      type="tel"
                       required
-                      placeholder="you@email.com"
+                      placeholder="Your phone number"
                       className={inputClass}
                     />
                   </div>
@@ -255,45 +243,43 @@ export function Rsvp() {
                         transition={{ duration: 0.3 }}
                         className="space-y-6 overflow-hidden"
                       >
-                        {!IS_RECEPTION && (
-                          <fieldset>
-                            <legend className={labelClass}>Function attending</legend>
-                            <div className="grid grid-cols-1 gap-3">
-                              {FUNCTIONS.map((option) => (
-                                <label
-                                  key={option}
-                                  className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-colors ${
+                        <fieldset>
+                          <legend className={labelClass}>Function attending</legend>
+                          <div className="grid grid-cols-1 gap-3">
+                            {FUNCTIONS.map((option) => (
+                              <label
+                                key={option}
+                                className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm transition-colors ${
+                                  functionAttending === option
+                                    ? 'border-champagne/60 bg-champagne/10 text-cream'
+                                    : 'border-cream/15 bg-cream/5 text-cream/70 hover:border-cream/30'
+                                }`}
+                              >
+                                <input
+                                  type="radio"
+                                  name="functionAttending"
+                                  value={option}
+                                  checked={functionAttending === option}
+                                  onChange={() => setFunctionAttending(option)}
+                                  className="sr-only"
+                                />
+                                <span
+                                  className={`flex size-4 items-center justify-center rounded-full border ${
                                     functionAttending === option
-                                      ? 'border-champagne/60 bg-champagne/10 text-cream'
-                                      : 'border-cream/15 bg-cream/5 text-cream/70 hover:border-cream/30'
+                                      ? 'border-champagne bg-champagne'
+                                      : 'border-cream/40'
                                   }`}
+                                  aria-hidden="true"
                                 >
-                                  <input
-                                    type="radio"
-                                    name="functionAttending"
-                                    value={option}
-                                    checked={functionAttending === option}
-                                    onChange={() => setFunctionAttending(option)}
-                                    className="sr-only"
-                                  />
-                                  <span
-                                    className={`flex size-4 items-center justify-center rounded-full border ${
-                                      functionAttending === option
-                                        ? 'border-champagne bg-champagne'
-                                        : 'border-cream/40'
-                                    }`}
-                                    aria-hidden="true"
-                                  >
-                                    {functionAttending === option && (
-                                      <Check className="size-3 text-white" />
-                                    )}
-                                  </span>
-                                  {option}
-                                </label>
-                              ))}
-                            </div>
-                          </fieldset>
-                        )}
+                                  {functionAttending === option && (
+                                    <Check className="size-3 text-white" />
+                                  )}
+                                </span>
+                                {option}
+                              </label>
+                            ))}
+                          </div>
+                        </fieldset>
 
                         <div>
                           <label className={labelClass}>Number of guests</label>
@@ -309,26 +295,11 @@ export function Rsvp() {
                                     : 'border-cream/15 bg-cream/5 text-cream/70 hover:border-cream/30'
                                 }`}
                               >
-                                {n === 1 ? 'Just me' : 'Me + plus one'}
+                                {n === 1 ? 'Just me' : 'Me + one'}
                               </button>
                             ))}
                           </div>
                         </div>
-
-                        {!IS_RECEPTION && (
-                          <div>
-                            <label htmlFor="arrivalDate" className={labelClass}>
-                              When are you planning to arrive?
-                            </label>
-                            <input
-                              id="arrivalDate"
-                              name="arrivalDate"
-                              type="date"
-                              required
-                              className={inputClass}
-                            />
-                          </div>
-                        )}
                       </motion.div>
                     )}
                   </AnimatePresence>

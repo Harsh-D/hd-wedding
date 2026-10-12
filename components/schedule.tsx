@@ -15,13 +15,13 @@ import {
 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { googleCalendarUrl, icsDataUri } from '@/lib/calendar'
-import { IS_RECEPTION, RECEPTION, RECEPTION_SCHEDULE, SCHEDULE, WEDDING, type ScheduleItem } from '@/lib/wedding'
+import { RECEPTION, SCHEDULE, WEDDING, type ScheduleItem } from '@/lib/wedding'
 import { Reveal, SectionHeading } from '@/components/reveal'
 
 function EventIcon({ title }: { title: string }) {
   const Icon = title.includes('Haldi')
     ? Flower2
-    : title === 'Engagement'
+    : title.includes('Engagement')
       ? Gem
       : title === 'Sangeet'
         ? Music2
@@ -34,7 +34,7 @@ function EventIcon({ title }: { title: string }) {
 
 function eventColorClass(title: string) {
   if (title.includes('Haldi')) return 'event-haldi'
-  if (title === 'Engagement') return 'event-engagement'
+  if (title.includes('Engagement')) return 'event-engagement'
   if (title === 'Sangeet') return 'event-sangeet'
   if (title === 'Wedding Ceremony') return 'event-wedding'
   return 'event-reception'
@@ -57,9 +57,7 @@ function AddToCalendar({ item }: { item: ScheduleItem }) {
     description: [item.description, item.note].filter(Boolean).join('\n\n'),
     location:
       item.calendarLocation ??
-      (IS_RECEPTION
-        ? `${RECEPTION.venue}, ${RECEPTION.venueAddress}`
-        : `${WEDDING.venue}, ${WEDDING.venueAddress}`),
+      `${WEDDING.venue}, ${WEDDING.venueAddress}`,
     start: item.start,
     durationMinutes: item.durationMinutes,
   }
@@ -125,69 +123,69 @@ function DayTimeline({ events, centered = false }: { events: ScheduleItem[]; cen
           const end = !centered && i % 2 === 0
 
           return (
-          <li
-            key={item.title}
-            className="relative"
-            style={{ zIndex: events.length - i }}
-          >
-            <Reveal delay={(i % 2) * 0.05}>
-              <div className={centered ? 'text-center' : 'relative pl-8 sm:grid sm:grid-cols-2 sm:gap-10 sm:pl-0'}>
-                {!centered && (
-                  <span
-                    className="absolute left-0 top-2 size-3.5 rounded-full border border-champagne bg-[#f7f0e2] sm:left-1/2 sm:-translate-x-1/2"
-                    aria-hidden="true"
-                  >
-                    <span className="absolute inset-0.5 rounded-full bg-champagne" />
-                  </span>
-                )}
-
-                <div className={centered ? '' : end ? 'sm:col-start-1 sm:text-right' : 'sm:col-start-2'}>
-                  <div className={`event-card glass rounded-2xl p-5 ${eventColorClass(item.title)}`}>
-                    <div className={`mb-3 flex ${centered ? 'justify-center' : end ? 'sm:justify-end' : ''}`}>
-                      <span className="event-icon flex size-10 items-center justify-center rounded-full border">
-                        <EventIcon title={item.title} />
-                      </span>
-                    </div>
-                    <div
-                      className={`event-time flex items-center gap-2 ${centered ? 'justify-center' : end ? 'sm:justify-end' : ''}`}
+            <li
+              key={item.title}
+              className="relative"
+              style={{ zIndex: events.length - i }}
+            >
+              <Reveal delay={(i % 2) * 0.05}>
+                <div className={centered ? 'text-center' : 'relative pl-8 sm:grid sm:grid-cols-2 sm:gap-10 sm:pl-0'}>
+                  {!centered && (
+                    <span
+                      className="absolute left-0 top-2 size-3.5 rounded-full border border-champagne bg-[#f7f0e2] sm:left-1/2 sm:-translate-x-1/2"
+                      aria-hidden="true"
                     >
-                      <Clock className="size-3.5" aria-hidden="true" />
-                      <span className="text-xs font-medium uppercase tracking-[0.2em]">
-                        {item.time}
-                      </span>
-                    </div>
-                    <h3 className="event-title font-serif mt-2 text-2xl font-light">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-cream/60">
-                      {item.description}
-                    </p>
-                    {item.note && (
-                      <p className="mt-2 text-sm italic leading-relaxed text-champagne/80">
-                        {item.note}
-                      </p>
-                    )}
-                    {item.mapsUrl && (
-                      <div className={`mt-3 flex ${centered ? 'justify-center' : end ? 'sm:justify-end' : ''}`}>
-                        <a
-                          href={item.mapsUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-medium text-champagne/90 underline-offset-4 hover:underline"
-                        >
-                          <MapPin className="size-3.5" aria-hidden="true" />
-                          {item.venue}
-                        </a>
+                      <span className="absolute inset-0.5 rounded-full bg-champagne" />
+                    </span>
+                  )}
+
+                  <div className={centered ? '' : end ? 'sm:col-start-1 sm:text-right' : 'sm:col-start-2'}>
+                    <div className={`event-card glass rounded-2xl p-5 ${eventColorClass(item.title)}`}>
+                      <div className={`mb-3 flex ${centered ? 'justify-center' : end ? 'sm:justify-end' : ''}`}>
+                        <span className="event-icon flex size-10 items-center justify-center rounded-full border">
+                          <EventIcon title={item.title} />
+                        </span>
                       </div>
-                    )}
-                    <div className={`mt-4 flex ${centered ? 'justify-center' : end ? 'sm:justify-end' : ''}`}>
-                      <AddToCalendar item={item} />
+                      <div
+                        className={`event-time flex items-center gap-2 ${centered ? 'justify-center' : end ? 'sm:justify-end' : ''}`}
+                      >
+                        <Clock className="size-3.5" aria-hidden="true" />
+                        <span className="text-xs font-medium uppercase tracking-[0.2em]">
+                          {item.time}
+                        </span>
+                      </div>
+                      <h3 className="event-title font-serif mt-2 text-2xl font-light">
+                        {item.title}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-cream/60">
+                        {item.description}
+                      </p>
+                      {item.note && (
+                        <p className="mt-2 text-sm italic leading-relaxed text-champagne/80">
+                          {item.note}
+                        </p>
+                      )}
+                      {item.mapsUrl && (
+                        <div className={`mt-3 flex ${centered ? 'justify-center' : end ? 'sm:justify-end' : ''}`}>
+                          <a
+                            href={item.mapsUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 text-xs font-medium text-champagne/90 underline-offset-4 hover:underline"
+                          >
+                            <MapPin className="size-3.5" aria-hidden="true" />
+                            {item.venue}
+                          </a>
+                        </div>
+                      )}
+                      <div className={`mt-4 flex ${centered ? 'justify-center' : end ? 'sm:justify-end' : ''}`}>
+                        <AddToCalendar item={item} />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </Reveal>
-          </li>
+              </Reveal>
+            </li>
           )
         })}
       </ol>
@@ -195,7 +193,7 @@ function DayTimeline({ events, centered = false }: { events: ScheduleItem[]; cen
   )
 }
 
-function VenueMap({ href, label, venue }: { href: string; label: string; venue: string }) {
+function VenueMap({ href, venue }: { href: string; venue: string }) {
   return (
     <Reveal className="mt-10 flex flex-col items-center gap-3 text-center">
       <a
@@ -205,7 +203,7 @@ function VenueMap({ href, label, venue }: { href: string; label: string; venue: 
         className="diya-glow group inline-flex items-center gap-2.5 rounded-full bg-champagne px-6 py-3 text-sm font-medium text-white transition-transform hover:scale-[1.03]"
       >
         <MapPin className="size-4" aria-hidden="true" />
-        {label}
+        Open in Google Maps
       </a>
       <p className="max-w-xs text-xs text-cream/45">{venue}</p>
     </Reveal>
@@ -213,23 +211,21 @@ function VenueMap({ href, label, venue }: { href: string; label: string; venue: 
 }
 
 export function Schedule() {
-  const days = IS_RECEPTION ? RECEPTION_SCHEDULE : SCHEDULE
-
   return (
     <section id="schedule" className="wedding-section section-saffron relative px-2.5 py-10 sm:px-6 sm:py-20">
       <div className="invitation-page-panel mx-auto max-w-4xl">
         <SectionHeading
-          eyebrow={IS_RECEPTION ? 'Groom’s Reception' : 'Two Days of Celebration'}
-          title={IS_RECEPTION ? 'An evening in Ramtek' : 'How it unfolds'}
+          eyebrow="Our Celebrations"
+          title="How it unfolds"
           align="center"
           className="max-w-xl"
         />
 
         <div className="mt-14 space-y-16">
-          {days.map((day, index) => {
-            const next = days[index + 1]
-            const showUjjain = !IS_RECEPTION && !day.separated && Boolean(next?.separated)
-            const showRamtek = day.separated || IS_RECEPTION
+          {SCHEDULE.map((day, index) => {
+            const next = SCHEDULE[index + 1]
+            const showWeddingMap = !day.separated && Boolean(next?.separated)
+            const showReceptionMap = day.separated
 
             return (
               <div key={day.label}>
@@ -254,18 +250,16 @@ export function Schedule() {
                     />
                   </div>
                 </Reveal>
-                <DayTimeline events={day.events} centered={day.separated || IS_RECEPTION} />
-                {showUjjain && (
+                <DayTimeline events={day.events} centered={day.separated} />
+                {showWeddingMap && (
                   <VenueMap
                     href={WEDDING.mapsUrl}
-                    label="Ujjain in Google Maps"
                     venue={`${WEDDING.venue} · ${WEDDING.venueAddress}`}
                   />
                 )}
-                {showRamtek && (
+                {showReceptionMap && (
                   <VenueMap
                     href={RECEPTION.mapsUrl}
-                    label="Ramtek in Google Maps"
                     venue={`${RECEPTION.venue} · ${RECEPTION.venueAddress}`}
                   />
                 )}

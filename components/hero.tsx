@@ -5,7 +5,7 @@ import { MapPin } from 'lucide-react'
 import { Countdown } from '@/components/countdown'
 import { GaneshEmblem } from '@/components/indian-ornaments'
 import { BASE_PATH } from '@/lib/base-path'
-import { IS_RECEPTION, RECEPTION, WEDDING } from '@/lib/wedding'
+import { RECEPTION, WEDDING } from '@/lib/wedding'
 
 export function Hero() {
   return (
@@ -14,10 +14,10 @@ export function Hero() {
         <picture aria-hidden="true">
           <source
             media="(min-width: 900px) and (orientation: landscape)"
-            srcSet={`${BASE_PATH}/indian-wedding-hero-desktop-botanical.png`}
+            srcSet={`${BASE_PATH}/indian-wedding-hero-desktop-botanical.jpg`}
           />
           <img
-            src={`${BASE_PATH}/indian-wedding-hero-centered.png`}
+            src={`${BASE_PATH}/indian-wedding-hero-centered.jpg`}
             alt=""
             className="block h-auto w-full select-none"
           />
@@ -53,7 +53,7 @@ export function Hero() {
             Together with our families
           </p>
           <p className="font-serif text-champagne max-w-[11rem] text-balance text-center text-[11px] font-light leading-snug tracking-normal sm:max-w-xs sm:text-xs">
-            {IS_RECEPTION ? RECEPTION.inviteLine : 'we cordially invite you to our wedding'}
+            we cordially invite you to our wedding
           </p>
         </motion.div>
 
@@ -74,13 +74,21 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] sm:text-sm sm:tracking-[0.28em]">
-            {IS_RECEPTION ? RECEPTION.dateLabel : WEDDING.dateLabel}
-          </p>
-          <p className="flex items-center gap-1.5 text-xs text-cream/70 sm:text-sm">
-            <MapPin className="size-3.5 text-champagne" aria-hidden="true" />
-            {IS_RECEPTION ? RECEPTION.location : WEDDING.location}
-          </p>
+          {/* One grid so the pipes align in a column across both lines */}
+          <div className="grid w-full grid-cols-[1fr_auto_1fr] items-center gap-x-2 text-[9px] font-semibold uppercase tracking-[0.08em] sm:text-xs sm:tracking-[0.16em]">
+            <span className="text-right">{WEDDING.dateLabel}</span>
+            <span className="text-cream/60">|</span>
+            <span className="flex items-center justify-start gap-1 text-left">
+              <MapPin className="size-2.5 shrink-0 text-champagne sm:size-3" aria-hidden="true" />
+              {WEDDING.location}
+            </span>
+            <span className="text-right">{RECEPTION.dateLabel}</span>
+            <span className="text-cream/60">|</span>
+            <span className="flex items-center justify-start gap-1 text-left">
+              <MapPin className="size-2.5 shrink-0 text-champagne sm:size-3" aria-hidden="true" />
+              {RECEPTION.location}
+            </span>
+          </div>
         </motion.div>
 
         <motion.div
@@ -89,7 +97,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.7 }}
         >
-          <Countdown target={IS_RECEPTION ? RECEPTION.date : WEDDING.date} />
+          <Countdown target={WEDDING.date} />
         </motion.div>
         </div>
       </div>

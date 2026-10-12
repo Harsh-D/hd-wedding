@@ -16,20 +16,15 @@ const sans = Inter({
   display: 'swap',
 })
 
-const reception = process.env.NEXT_PUBLIC_SITE === 'reception'
-
 export const metadata: Metadata = {
-  metadataBase: new URL(`https://utkarshb1.github.io${BASE_PATH || '/us'}/`),
-  title: reception ? 'Saloni & Utkarsh · Reception, Ramtek' : 'Saloni & Utkarsh · Ujjain, India',
-  description: reception
-    ? 'Join us for the reception of Saloni & Utkarsh at Takkamore Celebration Hall, Ramtek, on December 4, 2026.'
-    : 'Join us for the wedding of Saloni & Utkarsh in Ujjain, India — December 2, 2026. RSVP, schedule, dress code, and more.',
-  generator: 'v0.app',
+  metadataBase: new URL('https://harsh-d.github.io/hd-wedding/'),
+  title: 'Harsh & Priyanka · VisakhaPatnam, India',
+  description:
+    'Join us for the wedding of Harsh & Priyanka in VisakhaPatnam, AP — December 13–14, 2026, with a reception in Nagpur, MH on December 19, 2026.',
   openGraph: {
-    title: reception ? 'Saloni & Utkarsh · Reception, Ramtek' : 'Saloni & Utkarsh · Ujjain, India',
-    description: reception
-      ? 'Join us for the reception of Saloni & Utkarsh at Takkamore Celebration Hall, Ramtek, on December 4, 2026.'
-      : 'Join us for the wedding of Saloni & Utkarsh in Ujjain, India — December 2, 2026.',
+    title: 'Harsh & Priyanka · VisakhaPatnam, India',
+    description:
+      'Join us for the wedding of Harsh & Priyanka in VisakhaPatnam, AP — December 13–14, 2026, with a reception in Nagpur, MH on December 19, 2026.',
     images: [`${BASE_PATH}/hero.jpeg`],
     type: 'website',
   },

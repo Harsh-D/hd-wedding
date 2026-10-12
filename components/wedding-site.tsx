@@ -4,7 +4,8 @@ import { Schedule } from '@/components/schedule'
 import { Rsvp } from '@/components/rsvp'
 import { MusicPlayer } from '@/components/music-player'
 import { PetalFall } from '@/components/petal-fall'
-import { IS_RECEPTION, RECEPTION, WEDDING, type Moment } from '@/lib/wedding'
+import { MapPin } from 'lucide-react'
+import { RECEPTION, WEDDING, type Moment } from '@/lib/wedding'
 
 export function WeddingSite({ moments }: { moments: Moment[] }) {
   return (
@@ -23,25 +24,36 @@ export function WeddingSite({ moments }: { moments: Moment[] }) {
           <div>
             <p className="font-serif text-4xl font-light text-champagne">{WEDDING.couple[0]}</p>
             <p className="mt-2 text-xs leading-relaxed text-cream/70">
-              <span className="block">Daughter of</span>
-              <span className="block">Kamal Kishore Patidar</span>
-              <span className="block">Gayatri Patidar</span>
+              <span className="block">Son of</span>
+              <span className="block">Suryakant Deshpande</span>
+              <span className="block">Vishakha Deshpande</span>
             </p>
           </div>
           <span className="font-serif pt-1 text-4xl font-light text-champagne/90">&amp;</span>
           <div>
             <p className="font-serif text-4xl font-light text-champagne">{WEDDING.couple[1]}</p>
             <p className="mt-2 text-xs leading-relaxed text-cream/70">
-              <span className="block">Son of</span>
-              <span className="block">Subhash Kisanji Bhiogade</span>
-              <span className="block">Surekha Bhiogade</span>
+              <span className="block">Daughter of</span>
+              <span className="block">Srinivasarao Mallavarapu</span>
+              <span className="block">Syamala Mallavarapu</span>
             </p>
           </div>
         </div>
-        <p className="mt-4 text-xs uppercase tracking-[0.3em] text-cream/50">
-          {IS_RECEPTION ? RECEPTION.dateLabel : WEDDING.dateLabel} ·{' '}
-          {IS_RECEPTION ? RECEPTION.location : WEDDING.location}
-        </p>
+        {/* One grid so the pipes align in a column across both lines */}
+        <div className="mx-auto mt-4 grid w-fit grid-cols-[1fr_auto_1fr] items-center gap-x-2 text-xs uppercase tracking-[0.3em] text-cream/50">
+          <span className="text-right">{WEDDING.dateLabel}</span>
+          <span>|</span>
+          <span className="flex items-center justify-start gap-1 text-left">
+            <MapPin className="size-3 shrink-0 text-champagne" aria-hidden="true" />
+            {WEDDING.location}
+          </span>
+          <span className="text-right">{RECEPTION.dateLabel}</span>
+          <span>|</span>
+          <span className="flex items-center justify-start gap-1 text-left">
+            <MapPin className="size-3 shrink-0 text-champagne" aria-hidden="true" />
+            {RECEPTION.location}
+          </span>
+        </div>
         <p className="mt-6 text-xs text-cream/30">
           Made with love, for the ones we love.
         </p>

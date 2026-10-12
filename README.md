@@ -1,33 +1,23 @@
-# us
+# Harsh & Priyanka — Wedding Invitation
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
-
-## Built with v0
-
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
-
-[Continue working on v0 →](https://v0.app/chat/projects/prj_TGUZAyts5GwJ1ZXZuugk0pRf5JUd)
+A single-page wedding-invitation site built with [Next.js](https://nextjs.org) (App Router, static export), [Tailwind CSS](https://tailwindcss.com) 4, and [framer-motion](https://www.framer.com/motion/). Live at **https://harsh-d.github.io/hd-wedding/** — every push to `main` deploys automatically via GitHub Actions.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the site. In dev the base path is empty; in production the site is served under `/hd-wedding` (GitHub Pages).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Customizing the site
 
-## Learn More
+- **All content** (names, dates, schedule, venue, photos) lives in [lib/wedding.ts](lib/wedding.ts). Search for `TODO:` — every placeholder for your data is marked.
+- **Photos**: replace the files in `public/` keeping the same filenames — `moment-1.jpeg` … `moment-7.jpeg` (gallery) and `hero.jpeg` (social preview image).
+- **RSVP**: the form posts to a Google Form. Create your own form, then put its `formResponse` URL and field (`entry.*`) IDs in [components/rsvp.tsx](components/rsvp.tsx).
+- **Music**: the audio file is `public/Goldie_Sohel_-_Aaj_Sajeya_(mp3.pm).mp3`; replace it (or update the `src` in [components/music-player.tsx](components/music-player.tsx)) to change the song.
 
-To learn more, take a look at the following resources:
+## Deploying
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
+`pnpm build` generates the static site into `out/`. Pushing to `main` triggers [.github/workflows/deploy-pages.yml](.github/workflows/deploy-pages.yml), which builds and publishes to GitHub Pages.

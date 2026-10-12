@@ -2,9 +2,7 @@
 const nextConfig = {
   agentRules: false,
   output: 'export',
-  basePath:
-    process.env.NEXT_PUBLIC_BASE_PATH ??
-    (process.env.NODE_ENV === 'production' ? '/us' : ''),
+  basePath: process.env.NODE_ENV === 'production' ? '/hd-wedding' : '',
   trailingSlash: true,
   typescript: {
     ignoreBuildErrors: true,
