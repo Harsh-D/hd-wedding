@@ -87,6 +87,21 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+/* The invitation design is light-only. Pin the page to light colors even on
+   devices with dark mode enabled, so the artwork and text stay as designed. */
+html,
+body {
+  color-scheme: light;
+  background-color: #f7f0e2;
+}
+
+input,
+select,
+textarea,
+button {
+  color-scheme: light;
+}
+
 .dark {
   color-scheme: dark;
   --background: oklch(0.145 0 0);

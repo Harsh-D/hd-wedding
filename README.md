@@ -16,7 +16,7 @@ Open [http://localhost:3000](http://localhost:3000) to see the site. In dev the 
 - **All content** (names, dates, schedule, venue, photos) lives in [lib/wedding.ts](lib/wedding.ts). Search for `TODO:` — every placeholder for your data is marked.
 - **Photos**: replace the files in `public/` keeping the same filenames — `moment-1.jpeg` … `moment-7.jpeg` (gallery) and `hero.jpeg` (social preview image).
 - **RSVP**: the form posts to a Google Form. Create your own form, then put its `formResponse` URL and field (`entry.*`) IDs in [components/rsvp.tsx](components/rsvp.tsx).
-- **Music**: the audio file is `public/Goldie_Sohel_-_Aaj_Sajeya_(mp3.pm).mp3`; replace it (or update the `src` in [components/music-player.tsx](components/music-player.tsx)) to change the song.
+- **Music**: the audio file is `public/navrai-maajhi-english-vinglish.mp3`; replace it (or update the `src` in [components/music-player.tsx](components/music-player.tsx)) to change the song.
 
 ## Deploying
 

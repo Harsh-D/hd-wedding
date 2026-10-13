@@ -2,16 +2,17 @@ import { BASE_PATH } from '@/lib/base-path'
 
 export const WEDDING = {
   couple: ['Harsh', 'Priyanka'] as const,
+  surnames: ['Deshpande', 'Mallavarapu'] as const,
   dateLabel: 'December 13 – 14, 2026',
-  location: 'VisakhaPatnam, AP',
+  location: 'Visakhapatnam, AP',
   venue: 'TSR Royal Gardens',
-  venueAddress: 'VisakhaPatnam, AP 530040',
+  venueAddress: 'Visakhapatnam, AP',
   // First celebration — used for the hero countdown (local ISO, IST)
   date: new Date('2026-12-13T19:00:00+05:30'),
   mapsUrl: 'https://maps.app.goo.gl/vrUcx11Wdo7fSsYU7',
 }
 
-// Reception hosted by the groom's family in Nagpur
+// Reception in Nagpur
 export const RECEPTION = {
   dateLabel: 'December 19, 2026',
   location: 'Nagpur, MH',
@@ -63,8 +64,8 @@ export const SCHEDULE: ScheduleDay[] = [
     events: [
       {
         title: 'Wedding Ceremony',
-        time: '4:00 AM',
-        start: new Date('2026-12-14T04:00:00+05:30'),
+        time: '3:56 AM',
+        start: new Date('2026-12-14T03:56:00+05:30'),
         durationMinutes: 180,
         venue: WEDDING.venue,
         address: WEDDING.venueAddress,
@@ -84,7 +85,7 @@ export const SCHEDULE: ScheduleDay[] = [
         durationMinutes: 240,
         venue: RECEPTION.venue,
         address: RECEPTION.venueAddress,
-        description: 'Dinner and celebration hosted by the groom’s family in Nagpur.',
+        description: 'Dinner and celebration with family and friends.',
         calendarLocation: `${RECEPTION.venue}, ${RECEPTION.venueAddress}`,
         mapsUrl: RECEPTION.mapsUrl,
       },

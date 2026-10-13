@@ -23,6 +23,9 @@ export function WeddingSite({ moments }: { moments: Moment[] }) {
         <div className="mx-auto grid max-w-2xl grid-cols-[1fr_auto_1fr] items-start gap-3">
           <div>
             <p className="font-serif text-4xl font-light text-champagne">{WEDDING.couple[0]}</p>
+            <p className="font-serif mt-1 text-lg font-light tracking-[0.25em] text-champagne/70">
+              {WEDDING.surnames[0]}
+            </p>
             <p className="mt-2 text-xs leading-relaxed text-cream/70">
               <span className="block">Son of</span>
               <span className="block">Suryakant Deshpande</span>
@@ -32,6 +35,9 @@ export function WeddingSite({ moments }: { moments: Moment[] }) {
           <span className="font-serif pt-1 text-4xl font-light text-champagne/90">&amp;</span>
           <div>
             <p className="font-serif text-4xl font-light text-champagne">{WEDDING.couple[1]}</p>
+            <p className="font-serif mt-1 text-lg font-light tracking-[0.25em] text-champagne/70">
+              {WEDDING.surnames[1]}
+            </p>
             <p className="mt-2 text-xs leading-relaxed text-cream/70">
               <span className="block">Daughter of</span>
               <span className="block">Srinivasarao Mallavarapu</span>

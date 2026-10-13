@@ -18,13 +18,13 @@ const sans = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://harsh-d.github.io/hd-wedding/'),
-  title: 'Harsh & Priyanka · VisakhaPatnam, India',
+  title: 'Harsh & Priyanka · Visakhapatnam, India',
   description:
-    'Join us for the wedding of Harsh & Priyanka in VisakhaPatnam, AP — December 13–14, 2026, with a reception in Nagpur, MH on December 19, 2026.',
+    'Join us for the wedding of Harsh & Priyanka in Visakhapatnam, AP — December 13–14, 2026, with a reception in Nagpur, MH on December 19, 2026.',
   openGraph: {
-    title: 'Harsh & Priyanka · VisakhaPatnam, India',
+    title: 'Harsh & Priyanka · Visakhapatnam, India',
     description:
-      'Join us for the wedding of Harsh & Priyanka in VisakhaPatnam, AP — December 13–14, 2026, with a reception in Nagpur, MH on December 19, 2026.',
+      'Join us for the wedding of Harsh & Priyanka in Visakhapatnam, AP — December 13–14, 2026, with a reception in Nagpur, MH on December 19, 2026.',
     images: [`${BASE_PATH}/hero.jpeg`],
     type: 'website',
   },
@@ -50,7 +50,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${serif.variable} ${sans.variable} light`}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased bg-[#f7f0e2] text-[#3b2f27]">{children}</body>
     </html>
   )
 }

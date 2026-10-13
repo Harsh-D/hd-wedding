@@ -76,7 +76,7 @@ export function MusicPlayer() {
     >
       <audio
         ref={audioRef}
-        src={`${BASE_PATH}/Goldie_Sohel_-_Aaj_Sajeya_(mp3.pm).mp3`}
+        src={`${BASE_PATH}/navrai-maajhi-english-vinglish.mp3`}
         autoPlay
         loop
         preload="metadata"
