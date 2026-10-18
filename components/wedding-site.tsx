@@ -1,3 +1,4 @@
+import { Envelope } from '@/components/envelope'
 import { Hero } from '@/components/hero'
 import { Moments } from '@/components/moments'
 import { Schedule } from '@/components/schedule'
@@ -18,6 +19,7 @@ export function WeddingSite({
 
   return (
     <main className="relative overflow-x-hidden bg-[#f7f0e2]">
+      <Envelope />
       <PetalFall />
       <Hero variant={variant} />
       <Moments moments={moments} />

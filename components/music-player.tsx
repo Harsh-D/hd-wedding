@@ -27,8 +27,6 @@ function Equalizer({ active }: { active: boolean }) {
 
 export function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null)
-  const playerRef = useRef<HTMLDivElement>(null)
-  const pausedByUser = useRef(false)
   const [playing, setPlaying] = useState(false)
 
   useEffect(() => {
@@ -37,24 +35,14 @@ export function MusicPlayer() {
 
     audio.volume = 0.55
 
-    // Browsers block sound autoplay until a user gesture. Keep retrying on
-    // every interaction (not just the first) — on some phones the first
-    // gesture is a scroll, which browsers may not count as play-allowing.
-    // Once the guest pauses deliberately, these retries stop for good.
-    const tryPlay = (e: Event) => {
-      if (pausedByUser.current) return
-      const target = e.target as Node
-      if (playerRef.current?.contains(target)) return
+    // The song starts when the guest opens the memories section (or presses
+    // this player's button) — a real click always satisfies the browser's
+    // autoplay rules, so no gesture hacks are needed.
+    const onPlayRequest = () => {
       if (audio.paused) void audio.play().catch(() => undefined)
     }
-    const events = ['pointerdown', 'touchstart', 'touchend', 'click', 'keydown', 'scroll'] as const
-
-    void audio.play().catch(() => undefined)
-    events.forEach((evt) => window.addEventListener(evt, tryPlay, { passive: true }))
-
-    return () => {
-      events.forEach((evt) => window.removeEventListener(evt, tryPlay))
-    }
+    window.addEventListener('wedding:play-music', onPlayRequest)
+    return () => window.removeEventListener('wedding:play-music', onPlayRequest)
   }, [])
 
   async function togglePlayback() {
@@ -62,13 +50,11 @@ export function MusicPlayer() {
     if (!audio) return
 
     if (playing) {
-      pausedByUser.current = true
       audio.pause()
       return
     }
 
     try {
-      pausedByUser.current = false
       audio.volume = 0.55
       await audio.play()
     } catch {
@@ -78,7 +64,6 @@ export function MusicPlayer() {
 
   return (
     <motion.div
-      ref={playerRef}
       className="fixed bottom-5 right-5 z-50 flex items-center gap-1"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
