@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
-import { BASE_PATH } from '@/lib/base-path'
+import { asset } from '@/lib/base-path'
 import './globals.css'
 
 const serif = Cormorant_Garamond({
@@ -25,16 +25,16 @@ export const metadata: Metadata = {
     title: 'Harsh & Priyanka · Visakhapatnam, India',
     description:
       'Join us for the wedding of Harsh & Priyanka in Visakhapatnam, AP — December 13–14, 2026, with a reception in Nagpur, MH on December 19, 2026.',
-    images: [`${BASE_PATH}/hero.jpeg`],
+    images: [asset('/hero.jpeg')],
     type: 'website',
   },
   icons: {
     icon: [
-      { url: `${BASE_PATH}/icon-light-32x32.png`, media: '(prefers-color-scheme: light)' },
-      { url: `${BASE_PATH}/icon-dark-32x32.png`, media: '(prefers-color-scheme: dark)' },
-      { url: `${BASE_PATH}/icon.svg`, type: 'image/svg+xml' },
+      { url: asset('/icon-light-32x32.png'), media: '(prefers-color-scheme: light)' },
+      { url: asset('/icon-dark-32x32.png'), media: '(prefers-color-scheme: dark)' },
+      { url: asset('/icon.svg'), type: 'image/svg+xml' },
     ],
-    apple: `${BASE_PATH}/apple-icon.png`,
+    apple: asset('/apple-icon.png'),
   },
 }
 

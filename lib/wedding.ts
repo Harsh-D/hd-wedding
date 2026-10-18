@@ -1,4 +1,4 @@
-import { BASE_PATH } from '@/lib/base-path'
+import { asset } from '@/lib/base-path'
 
 export const WEDDING = {
   couple: ['Harsh', 'Priyanka'] as const,
@@ -122,10 +122,10 @@ export type Moment = {
 // Photos are replaced manually: keep the same filenames in public/ (moment-1..7).
 // The gallery is masonry-style, so photos display at their natural aspect ratio.
 export const MOMENTS: Moment[] = [
-  { src: `${BASE_PATH}/moment-1.jpeg`, alt: 'The couple' },
-  { src: `${BASE_PATH}/moment-2.jpeg`, alt: 'The couple' },
-  { src: `${BASE_PATH}/moment-5.jpeg`, alt: 'The couple' },
-  { src: `${BASE_PATH}/moment-6.jpeg`, alt: 'The couple' },
-  { src: `${BASE_PATH}/moment-4.jpeg`, alt: 'The couple' },
-  { src: `${BASE_PATH}/moment-7.jpeg`, alt: 'The couple' },
+  { src: asset('/moment-1.jpeg'), alt: 'The couple' },
+  { src: asset('/moment-2.jpeg'), alt: 'The couple' },
+  { src: asset('/moment-5.jpeg'), alt: 'The couple' },
+  { src: asset('/moment-6.jpeg'), alt: 'The couple' },
+  { src: asset('/moment-4.jpeg'), alt: 'The couple' },
+  { src: asset('/moment-7.jpeg'), alt: 'The couple' },
 ]

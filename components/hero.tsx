@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { MapPin } from 'lucide-react'
 import { Countdown } from '@/components/countdown'
 import { GaneshEmblem } from '@/components/indian-ornaments'
-import { BASE_PATH } from '@/lib/base-path'
+import { asset } from '@/lib/base-path'
 import { RECEPTION, WEDDING, type SiteVariant } from '@/lib/wedding'
 
 export function Hero({ variant = 'wedding' }: { variant?: SiteVariant }) {
@@ -18,10 +18,10 @@ export function Hero({ variant = 'wedding' }: { variant?: SiteVariant }) {
         <picture aria-hidden="true" className="absolute inset-0">
           <source
             media="(min-width: 900px) and (orientation: landscape)"
-            srcSet={`${BASE_PATH}/indian-wedding-hero-desktop-botanical.jpg`}
+            srcSet={asset('/indian-wedding-hero-desktop-botanical.jpg')}
           />
           <img
-            src={`${BASE_PATH}/indian-wedding-hero-centered.jpg`}
+            src={asset('/indian-wedding-hero-centered.jpg')}
             alt=""
             className="h-full w-full select-none object-cover object-top"
           />
