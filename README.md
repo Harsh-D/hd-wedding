@@ -2,6 +2,10 @@
 
 A single-page wedding-invitation site built with [Next.js](https://nextjs.org) (App Router, static export), [Tailwind CSS](https://tailwindcss.com) 4, and [framer-motion](https://www.framer.com/motion/). Live at **https://harsh-d.github.io/hd-wedding/** — every push to `main` deploys automatically via GitHub Actions.
 
+Two pages share the site:
+- `/` — the wedding invitation (Visakhapatnam, Dec 13–14, plus the Nagpur reception day)
+- `/reception` — a reception-only invitation for Nagpur (Dec 19) with its own footer hosts and a single-event schedule; its RSVP posts to the same Google Form with "Reception at Nagpur" pre-selected
+
 ## Getting Started
 
 ```bash

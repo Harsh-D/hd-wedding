@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Check, Heart, PartyPopper } from 'lucide-react'
 import { useState } from 'react'
 import { Reveal, SectionHeading } from '@/components/reveal'
+import { type SiteVariant } from '@/lib/wedding'
 
 type Attendance = 'yes' | 'no'
 type FunctionAttending = 'Wedding at Visakhapatnam' | 'Reception at Nagpur' | 'Both'
@@ -49,12 +50,16 @@ function CelebrationConfetti() {
   )
 }
 
-export function Rsvp() {
+export function Rsvp({ variant = 'wedding' }: { variant?: SiteVariant }) {
+  const reception = variant === 'reception'
+
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [attendance, setAttendance] = useState<Attendance>('yes')
-  const [functionAttending, setFunctionAttending] = useState<FunctionAttending>('Wedding at Visakhapatnam')
+  const [functionAttending, setFunctionAttending] = useState<FunctionAttending>(
+    reception ? 'Reception at Nagpur' : 'Wedding at Visakhapatnam',
+  )
   const [guests, setGuests] = useState(1)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -144,7 +149,9 @@ export function Rsvp() {
                   </h3>
                   <p className="mt-3 max-w-sm text-sm leading-relaxed text-cream/60">
                     {attendance === 'yes'
-                      ? 'See you there. We cannot wait to celebrate with you.'
+                      ? reception
+                        ? 'See you in Nagpur. We cannot wait to celebrate with you.'
+                        : 'See you there. We cannot wait to celebrate with you.'
                       : 'Thank you for letting us know — we will raise a glass to you from afar.'}
                   </p>
                   <button
@@ -196,7 +203,7 @@ export function Rsvp() {
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                       {(
                         [
-                          { v: 'yes', label: "Hell Yes, I'm In" },
+                          { v: 'yes', label: 'I will be there' },
                           { v: 'no', label: 'Regretfully Declining' },
                         ] as const
                       ).map((opt) => (
@@ -243,6 +250,7 @@ export function Rsvp() {
                         transition={{ duration: 0.3 }}
                         className="space-y-6 overflow-hidden"
                       >
+                        {!reception && (
                         <fieldset>
                           <legend className={labelClass}>Function attending</legend>
                           <div className="grid grid-cols-1 gap-3">
@@ -280,6 +288,7 @@ export function Rsvp() {
                             ))}
                           </div>
                         </fieldset>
+                        )}
 
                         <div>
                           <label className={labelClass}>Number of guests</label>

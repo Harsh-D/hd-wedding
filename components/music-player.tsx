@@ -34,18 +34,24 @@ export function MusicPlayer() {
     if (!audio) return
 
     audio.volume = 0.55
+
+    // Browsers block sound autoplay until the first user gesture, so try on
+    // load and retry on the first pointer/touch/key interaction.
     const unlockAudio = () => {
       window.removeEventListener('pointerdown', unlockAudio)
+      window.removeEventListener('touchend', unlockAudio)
       window.removeEventListener('keydown', unlockAudio)
       if (audio.paused) void audio.play().catch(() => undefined)
     }
 
     void audio.play().catch(() => undefined)
     window.addEventListener('pointerdown', unlockAudio, { once: true })
+    window.addEventListener('touchend', unlockAudio, { once: true })
     window.addEventListener('keydown', unlockAudio, { once: true })
 
     return () => {
       window.removeEventListener('pointerdown', unlockAudio)
+      window.removeEventListener('touchend', unlockAudio)
       window.removeEventListener('keydown', unlockAudio)
     }
   }, [])
@@ -79,7 +85,7 @@ export function MusicPlayer() {
         src={`${BASE_PATH}/navrai-maajhi-english-vinglish.mp3`}
         autoPlay
         loop
-        preload="metadata"
+        preload="auto"
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
       />

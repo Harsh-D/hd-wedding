@@ -15,7 +15,14 @@ import {
 } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { googleCalendarUrl, icsDataUri } from '@/lib/calendar'
-import { RECEPTION, SCHEDULE, WEDDING, type ScheduleItem } from '@/lib/wedding'
+import {
+  RECEPTION,
+  RECEPTION_SCHEDULE,
+  SCHEDULE,
+  WEDDING,
+  type ScheduleItem,
+  type SiteVariant,
+} from '@/lib/wedding'
 import { Reveal, SectionHeading } from '@/components/reveal'
 
 function EventIcon({ title }: { title: string }) {
@@ -210,26 +217,29 @@ function VenueMap({ href, venue }: { href: string; venue: string }) {
   )
 }
 
-export function Schedule() {
+export function Schedule({ variant = 'wedding' }: { variant?: SiteVariant }) {
+  const reception = variant === 'reception'
+  const days = reception ? RECEPTION_SCHEDULE : SCHEDULE
+
   return (
     <section id="schedule" className="wedding-section section-saffron relative px-2.5 py-10 sm:px-6 sm:py-20">
       <div className="invitation-page-panel mx-auto max-w-4xl">
         <SectionHeading
-          eyebrow="Our Celebrations"
-          title="How it unfolds"
+          eyebrow={reception ? 'Wedding Reception' : 'Our Celebrations'}
+          title={reception ? 'An evening in Nagpur' : 'How it unfolds'}
           align="center"
           className="max-w-xl"
         />
 
         <div className="mt-14 space-y-16">
-          {SCHEDULE.map((day, index) => {
-            const next = SCHEDULE[index + 1]
-            const showWeddingMap = !day.separated && Boolean(next?.separated)
-            const showReceptionMap = day.separated
+          {days.map((day, index) => {
+            const next = days[index + 1]
+            const showWeddingMap = !reception && !day.separated && Boolean(next?.separated)
+            const showReceptionMap = !reception && day.separated
 
             return (
               <div key={day.label}>
-                {day.separated && (
+                {!reception && day.separated && (
                   <div className="mb-16 flex items-center gap-4" aria-hidden="true">
                     <span className="h-px flex-1 bg-gradient-to-r from-transparent to-champagne/55" />
                     <span className="font-serif text-lg leading-none text-champagne/80">❦</span>
@@ -250,7 +260,7 @@ export function Schedule() {
                     />
                   </div>
                 </Reveal>
-                <DayTimeline events={day.events} centered={day.separated} />
+                <DayTimeline events={day.events} centered={reception || day.separated} />
                 {showWeddingMap && (
                   <VenueMap
                     href={WEDDING.mapsUrl}
@@ -267,6 +277,13 @@ export function Schedule() {
             )
           })}
         </div>
+
+        {reception && (
+          <VenueMap
+            href={RECEPTION.mapsUrl}
+            venue={`${RECEPTION.venue} · ${RECEPTION.venueAddress}`}
+          />
+        )}
       </div>
     </section>
   )

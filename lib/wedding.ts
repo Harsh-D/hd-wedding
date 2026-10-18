@@ -22,6 +22,18 @@ export const RECEPTION = {
   mapsUrl: 'https://maps.app.goo.gl/5JT13riD9u2b88k69',
 }
 
+// The two page variants: the main wedding invite and the /reception invite
+export type SiteVariant = 'wedding' | 'reception'
+
+// Names shown at the bottom of the reception page
+export const RECEPTION_HOSTS = [
+  'Suryakant & Vishakha Deshpande',
+  'Alka Deshpande',
+  'Eshan Deshpande',
+  'Lakhe Family',
+  'Dixit Family',
+]
+
 export type ScheduleItem = {
   title: string
   time: string
@@ -40,6 +52,18 @@ export type ScheduleDay = {
   dateLabel: string
   events: ScheduleItem[]
   separated?: boolean
+}
+
+const RECEPTION_EVENT: ScheduleItem = {
+  title: 'Reception',
+  time: '7:30 PM onwards',
+  start: RECEPTION.date,
+  durationMinutes: 240,
+  venue: RECEPTION.venue,
+  address: RECEPTION.venueAddress,
+  description: 'Dinner and celebration with family and friends.',
+  calendarLocation: `${RECEPTION.venue}, ${RECEPTION.venueAddress}`,
+  mapsUrl: RECEPTION.mapsUrl,
 }
 
 export const SCHEDULE: ScheduleDay[] = [
@@ -77,19 +101,16 @@ export const SCHEDULE: ScheduleDay[] = [
     label: 'Reception at Nagpur',
     dateLabel: RECEPTION.dateLabel,
     separated: true,
-    events: [
-      {
-        title: 'Reception',
-        time: '7:30 PM onwards',
-        start: RECEPTION.date,
-        durationMinutes: 240,
-        venue: RECEPTION.venue,
-        address: RECEPTION.venueAddress,
-        description: 'Dinner and celebration with family and friends.',
-        calendarLocation: `${RECEPTION.venue}, ${RECEPTION.venueAddress}`,
-        mapsUrl: RECEPTION.mapsUrl,
-      },
-    ],
+    events: [RECEPTION_EVENT],
+  },
+]
+
+// The reception-only schedule used by the /reception page
+export const RECEPTION_SCHEDULE: ScheduleDay[] = [
+  {
+    label: 'Wedding Reception',
+    dateLabel: RECEPTION.dateLabel,
+    events: [RECEPTION_EVENT],
   },
 ]
 
