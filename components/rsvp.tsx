@@ -15,7 +15,7 @@ const FUNCTIONS: FunctionAttending[] = ['Wedding at Visakhapatnam', 'Reception a
 const GOOGLE_FORM_URL =
   'https://docs.google.com/forms/d/e/1FAIpQLSeXQmLhpsLJUvHX28FUx3VSMawQ8dX0BU3uHFE5ZvCE2hC5ng/formResponse'
 
-const RSVP_DEADLINE = 'October 25, 2026'
+const RSVP_DEADLINE = 'December 5, 2026'
 
 const inputClass =
   'w-full rounded-xl border border-cream/15 bg-cream/5 px-4 py-3 text-sm text-cream placeholder:text-cream/35 outline-none transition-colors focus:border-champagne/60 focus:bg-cream/10'
